@@ -26,8 +26,8 @@ wanted_distance = args.integer[0]
 
 data = pd.read_csv(file_path)
 
-data.dropna(subset = ['HUNDENAME'], inplace =True)
-data = data[data['HUNDENAME'] != 'unbekannt']
+data.dropna(subset = [col_name], inplace =True)
+data = data[data[col_name] != 'unbekannt']
 
 data['cleaned_name'] = data[col_name].apply(lambda x: re.sub(r'\W+', '', x.split(' ')[0]))
 
