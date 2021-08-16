@@ -28,4 +28,4 @@ os.chdir(folder_path)
 for image in images:
     if not os.path.isfile(image) or image[:2] != 'ic':
         continue
-    transform_image(image, new_size= (192,192), rotation=-90, format = 'jpeg')
+    transform_image(image, new_size= (128, 128), rotation=-90, format = 'jpeg')
