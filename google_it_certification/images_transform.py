@@ -26,6 +26,7 @@ images = os.listdir(folder_path)
 os.chdir(folder_path)
 
 for image in images:
-    if not os.path.isfile(image) or image[:2] != 'ic':
+    try:
+        transform_image(image, new_size= (128, 128), rotation=-90, format = 'jpeg')
+    except PIL.UnidentifiedImageError as E:
         continue
-    transform_image(image, new_size= (128, 128), rotation=-90, format = 'jpeg')
