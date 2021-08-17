@@ -1,0 +1,1 @@
+scp -r -i public_key.pem user@server:/path/to/folder /home/user/Desktop/
