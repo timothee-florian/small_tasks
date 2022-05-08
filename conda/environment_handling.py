@@ -3,15 +3,15 @@
 import os
 import sys
 import argparse
-# os.system(r'conda activate C:\Users\bronner\anaconda3')
-# os.system(r'pip freeze > C:\Users\bronner\Desktop\test\requ.txt')
+# os.system(r'conda activate C:\Users\me\anaconda3')
+# os.system(r'pip freeze > C:\Users\me\Desktop\test\requ.txt')
 
 
-# os.system(r'conda create --prefix C:\Users\bronner\Desktop\test\test_env2 python=3.8.8')
+# os.system(r'conda create --prefix C:\Users\me\Desktop\test\test_env2 python=3.8.8')
 
-# os.system(r'conda activate C:\Users\bronner\Desktop\test\test_env2')
+# os.system(r'conda activate C:\Users\me\Desktop\test\test_env2')
 
-# os.system(r'pip install -r C:\Users\bronner\Desktop\test\requ.txt')
+# os.system(r'pip install -r C:\Users\me\Desktop\test\requ.txt')
 
 def create_activate_env(path : str, python_version) -> None:
     """For now only create."""
