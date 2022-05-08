@@ -36,10 +36,10 @@ def flatten(df, column: str, combine_names: bool = False) -> pd.DataFrame:
 
 if __name__ == '__main__':
     
-    with open('test2.json', 'r') as f:
+    with open('test.json', 'r') as f:
         data = json.load(f)
         
-    df = pd.DataFrame(data['menu'])
+    df = pd.DataFrame(data)#['menu'])
     df2 = df.explode('items')
     df3 = flatten(df2, 'items')
     # df = pd.DataFrame(data)
