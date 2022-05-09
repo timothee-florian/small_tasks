@@ -43,7 +43,7 @@ def clone_env(old_path : str, new_path : str) -> None:
     
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='create and activate a new conda environment')
-    parser.add_argument('-p', '--path', type = str, help = 'path name of the new environment')
+    parser.add_argument('-p', '--path', type = str, help = 'Path and name of the new environment')
     args = parser.parse_args()
     
     python_version = sys.version_info
