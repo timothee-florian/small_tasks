@@ -19,10 +19,12 @@ args = parser.parse_args()
 with open(args.sql, 'r') as f:
     text = f.read()
 
-parent_child = re.findall('''\w{1}[\w0-9]*.{0,1}\..{0,1}\w{1}[a-zA-Z_0-9]*''', text)
+text =  text.replace('''"''', '')
 
-parents = set(map(lambda x: x.split('.')[0].replace('''"''', ''), parent_child))
-childs = set(map(lambda x: x.split('.')[1].replace('''"''', ''), parent_child))
+parent_child = re.findall('''\w{1}[\w0-9]*\.\w{1}[a-zA-Z_0-9]*''', text)
+
+parents = set(map(lambda x: x.split('.')[0], parent_child))
+childs = set(map(lambda x: x.split('.')[1], parent_child))
 
 schemas = parents - childs
 columns = childs -  parents 
@@ -32,10 +34,10 @@ tables = parents.intersection(childs)
 if set(args.target) == set('tcs'):
     out = list(schemas.union(tables.union(columns)))
 elif 's' in args.target and 't' in args.target and 'c' not in args.target:
-    out = list(filter(lambda x: x.split('.')[0].replace('''"''', '') in schemas, parent_child))
+    out = list(filter(lambda x: x.split('.')[0] in schemas, parent_child))
 
 elif 'c' in args.target and 't' in args.target and 's' not in args.target:
-    out = list(filter(lambda x: x.split('.')[1].replace('''"''', '') in columns, parent_child))
+    out = list(filter(lambda x: x.split('.')[1] in columns, parent_child))
 
 elif 's' in args.target:
     out = list(schemas)
