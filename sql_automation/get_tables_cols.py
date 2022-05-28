@@ -9,9 +9,10 @@ Functions to retrieve the name of the schemas, tables, and columns in a SQL quer
 
 import re
 import argparse
-parser = argparse.ArgumentParser(description='Flattening JSON')
+parser = argparse.ArgumentParser(description='read a SQL script and retrieve the name of the schemas, tables and columns')
 parser.add_argument('-sql', '--sql', type = str, help = 'Path of the SQL script')
 parser.add_argument('-t', '--target', type = str, help = 'waht are researched Schema (s), Tables (t) or columns (c) not necessary unique eg. ct will retrieve both columns and tables name')
+parser.add_argument('-s', '--separator', type = str, help = 'separation between the outputs default return line', default= '\n')
 parser.add_argument('-out', '--path_out', type = str, help = 'Path of the text file containing the researched data')
 args = parser.parse_args()
 
@@ -42,3 +43,7 @@ elif 'c' in args.target:
     out = list(columns)
 elif 't' in args.target:
     out = list(tables)
+
+with open(args.path_out, 'w') as f:
+    for l in out:
+        f.write(f'{l}{args.separator}')
