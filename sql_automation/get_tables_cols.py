@@ -45,5 +45,4 @@ elif 't' in args.target:
     out = list(tables)
 
 with open(args.path_out, 'w') as f:
-    for l in out:
-        f.write(f'{l}{args.separator}')
+    f.write(args.separator.join(out))
