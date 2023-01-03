@@ -1,3 +1,4 @@
 noto_*.py
 env_test
 test*_env
+conda/*.txt
