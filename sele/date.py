@@ -47,3 +47,6 @@ while True:
         break
     days += [target]
     i += 1
+
+
+str_dates = list(map(lambda x: datetime.datetime.strftime(x, '%d/%m/%Y'), days))
