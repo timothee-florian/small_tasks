@@ -35,3 +35,15 @@ quarter= get_quarter(target)
 
 start_date, end_date = get_quarter_dates(year = year, quarter =  quarter)
 print(f"Quarter {quarter} {year}: {start_date} - {end_date}")
+
+
+start_date = datetime.datetime.strptime('13.01.2020', '%d.%m.%Y')
+end_date = datetime.datetime.strptime('13.02.2020', '%d.%m.%Y')
+i = 0
+days = []
+while True:
+    target = start_date + datetime.timedelta(days=i)
+    if target> end_date:
+        break
+    days += [target]
+    i += 1
