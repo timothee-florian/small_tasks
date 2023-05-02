@@ -21,6 +21,8 @@ def run_script():
     os.system(f"{env_name} {script_name}")
     
 def show_table(l=3, c=4):
+    df = pd.read_csv('test_out.csv')
+    l, c = df.shape
     root = tk.Tk()
 
     # Create a Treeview widget
@@ -28,15 +30,16 @@ def show_table(l=3, c=4):
 
     # Add column headers
     for j in range(c):
-        tree.heading(f"column{j+1}", text=f"Column {j+1}")
+        tree.heading(f"column{j+1}", text=df.columns[j])
     
     
 
     # Add rows of data
-    for i in range(l):
-        tree.insert("", "end", values=tuple(f"Row {i+1}, Column {j+1}" for j in range(c)))
+    #for i in range(l):
+   #     tree.insert("", "end", values=tuple(f"Row {i+1}, Column {j+1}" for j in range(c)))
    
-
+    for i in range(l):
+        tree.insert("", "end", values=tuple(df.iloc[i].values))
     # Pack the Treeview widget
     tree.pack()
 
