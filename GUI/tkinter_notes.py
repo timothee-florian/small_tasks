@@ -18,7 +18,30 @@ def run_script():
     env_name = selected_env.get()
     script_name = selected_script.get()  # get the selected script name from the dropdown
     # print(f"{env_name}python {script_name}.py")
-    os.system(f"{env_name} {script_name}") 
+    os.system(f"{env_name} {script_name}")
+    
+def show_table(l=3, c=4):
+    root = tk.Tk()
+
+    # Create a Treeview widget
+    tree = ttk.Treeview(root, columns=tuple(f"column{j+1}" for j in range(c)), show="headings")
+
+    # Add column headers
+    for j in range(c):
+        tree.heading(f"column{j+1}", text=f"Column {j+1}")
+    
+    
+
+    # Add rows of data
+    for i in range(l):
+        tree.insert("", "end", values=tuple(f"Row {i+1}, Column {j+1}" for j in range(c)))
+   
+
+    # Pack the Treeview widget
+    tree.pack()
+
+    # Run the tkinter event loop
+    root.mainloop()
 # Create the main window
 root = tk.Tk()
 #set size
@@ -57,10 +80,22 @@ run_button.configure(bg="#444", fg="white", font=("Arial", 10))
 run_button.pack(pady=10)
 run_button.place(relx=0.005, rely=0.9, anchor=tk.W)
 
+# Create a button that show a new table window 
+run_button = tk.Button(root, text="Show data", command=show_table)
+run_button.configure(bg="#666", fg="white", font=("Arial", 10))
+run_button.pack(pady=10)
+run_button.place(relx=0.5, rely=0.9, anchor=tk.W)
+
 # Create a button that closes the window
 close_button = tk.Button(root, text="Close", command=close_window)
 close_button.configure(bg="#444", fg="white", font=("Arial", 10))
 close_button.pack(pady=10)
 close_button.place(relx=0.995, rely=0.9, anchor=tk.E)
+
+# set timer to stop the gui after n minutes
+n = 2
+stop_time = int(n * 60 * 1000)
+root.after(stop_time, root.destroy)
+
 # Run the main loop
 root.mainloop()
