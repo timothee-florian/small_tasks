@@ -1,0 +1,11 @@
+pprofile --out profil_time_human_test.txt test.py
+pprofile --out profil_time_cachegrind.out.threads test_print.py
+
+python -m memory_profiler test.py > profil_memory_human_test.txt
+
+import numpy as np
+def f(x, y):
+    return g(x, y)
+f_vect = np.vectorize(f)
+
+cross_merge = pd.merge(df1.assign(key=1), df2.assign(key=1), on='key', how='outer').drop('key', axis=1)
