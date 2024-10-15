@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.model_selection import TimeSeriesSplit
-from sklearn.metrics import mean_squared_error
+from sklearn.model_selection import RandomizedSearchCV, TimeSeriesSplit
+from sklearn.metrics import mean_squared_error, make_scorer
 
 def get_dummy_data() -> pd.DataFrame:
     np.random.seed(42)
@@ -51,3 +51,51 @@ for train_index, test_index in tscv.split(X):
     y_pred = model.predict(X_test)
     rmse = np.sqrt(mean_squared_error(y_test, y_pred))
     print(f'Fold RMSE: {rmse}')
+
+
+param_grid = {
+        'n_estimators': np.arange(50, 300, 50),        # Number of trees
+        'max_depth': [10, 20, 30, None],               # Maximum depth of the tree
+        'min_samples_split': [2, 5, 10],               # Minimum number of samples to split an internal node
+        'min_samples_leaf': [1, 2, 4],                 # Minimum number of samples required at a leaf node
+        'max_features': ['auto', 'sqrt', 'log2'],      # Number of features to consider at each split
+        'bootstrap': [True, False]                     # Whether to bootstrap samples or not
+    }
+
+    # Initialize Random Forest Regressor
+model = RandomForestRegressor(random_state=42)
+metric = mean_squared_error
+def random_search_parmater(metric, model, param_grid):
+
+    # Define the parameter grid
+    
+
+    # Custom scoring function (you can use RMSE as a metric)
+    scorer = make_scorer(metric, greater_is_better=False)
+
+    # Time series cross-validator
+    tscv = TimeSeriesSplit(n_splits=5)
+
+    # RandomizedSearchCV setup
+    random_search = RandomizedSearchCV(
+        estimator=model,
+        param_distributions=param_grid,
+        n_iter=50,             # Number of parameter settings sampled
+        cv=tscv,               # TimeSeriesSplit for cross-validation
+        verbose=2,
+        random_state=42,
+        n_jobs=-1,             # Use all available processors
+        scoring=scorer         # Use custom scorer (negative MSE)
+    )
+
+    # Fit RandomizedSearchCV
+    random_search.fit(X, y)
+
+    # Best parameters from the search
+    print("Best Parameters:", random_search.best_params_)
+
+    # Best model's performance
+    best_model = random_search.best_estimator_
+    y_pred = best_model.predict(X_test)
+    rmse = np.sqrt(metric(y_test, y_pred))
+    print(f'Best Model RMSE: {rmse}')
