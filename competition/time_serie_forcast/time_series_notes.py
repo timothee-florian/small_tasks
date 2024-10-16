@@ -99,3 +99,17 @@ def random_search_parmater(metric, model, param_grid):
     y_pred = best_model.predict(X_test)
     rmse = np.sqrt(metric(y_test, y_pred))
     print(f'Best Model RMSE: {rmse}')
+
+# for xgboost
+# param_grid = {
+#     'n_estimators': np.arange(50, 300, 50),            # Number of boosting rounds
+#     'max_depth': [3, 6, 10, 15],                      # Maximum tree depth for base learners
+#     'learning_rate': [0.01, 0.05, 0.1, 0.2],          # Step size shrinkage used in update
+#     'subsample': [0.6, 0.8, 1.0],                     # Fraction of samples used per tree
+#     'colsample_bytree': [0.6, 0.8, 1.0],              # Fraction of features used per tree
+#     'gamma': [0, 0.1, 0.3, 0.5],                      # Minimum loss reduction to make a split
+#     'reg_alpha': [0, 0.01, 0.1, 1],                   # L1 regularization (for sparsity)
+#     'reg_lambda': [1, 1.5, 2],                        # L2 regularization (for weights)
+# }
+
+# model = xgb.XGBRegressor(objective='reg:squarederror', random_state=42)
