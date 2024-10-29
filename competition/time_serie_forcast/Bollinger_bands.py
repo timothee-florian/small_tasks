@@ -48,3 +48,45 @@ plt.scatter(df.index[df['Peak_Prediction']], df['Close'][df['Peak_Prediction']],
 plt.title('Bollinger Bands and Volume Spike Detection')
 plt.legend()
 plt.show()
+
+
+
+
+
+import pandas as pd
+import numpy as np
+
+# Example data (replace with your own DataFrame)
+# Let's assume df is a DataFrame with a 'Close' column for close prices
+# df = pd.DataFrame({'Close': [...]})
+
+# Parameters for Bollinger Bands
+window = 20   # Moving average period
+num_std_dev = 2  # Number of standard deviations for the bands
+
+# 1. Calculate the Simple Moving Average (SMA)
+df['SMA'] = df['Close'].rolling(window=window).mean()
+
+# 2. Calculate the rolling standard deviation
+df['STD'] = df['Close'].rolling(window=window).std()
+
+# 3. Calculate the Upper and Lower Bollinger Bands
+df['UpperBB'] = df['SMA'] + (num_std_dev * df['STD'])
+df['LowerBB'] = df['SMA'] - (num_std_dev * df['STD'])
+
+# Display the DataFrame with Bollinger Bands
+print(df[['Close', 'SMA', 'UpperBB', 'LowerBB']].head(25))
+
+# Optional: Plot the Bollinger Bands
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(14, 7))
+plt.plot(df['Close'], label='Close Price', color='blue')
+plt.plot(df['SMA'], label=f'{window}-Period SMA', color='orange')
+plt.plot(df['UpperBB'], label='Upper Bollinger Band', linestyle='--', color='green')
+plt.plot(df['LowerBB'], label='Lower Bollinger Band', linestyle='--', color='red')
+plt.fill_between(df.index, df['LowerBB'], df['UpperBB'], color='grey', alpha=0.2)
+
+plt.title('Bollinger Bands')
+plt.legend()
+plt.show()
