@@ -1,0 +1,12 @@
+stages:
+  - test
+
+job_name:
+  stage: test
+  before_script:
+    - |
+      available_versions=$(docker run python python -c "import sys; print('\n'.join([str(version) for version in sys.version_info]))")
+    - echo "Available Python versions: $available_versions"
+  script:
+    - python --version
+    # Add your test commands here
